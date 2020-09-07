@@ -1,0 +1,185 @@
+* {
+  margin: 0;
+  box-sizing: border-box;
+  font-family: "Lato", sans-serif;
+  
+}
+:root {
+  --shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  --red: #f25153;
+  --blue: #24367d;
+}
+.app {
+  box-shadow: var(--shadow);
+  border-radius: 10px;
+  height: 80vh;
+  width: 350px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  overflow-y: auto;
+  background: white;
+  border:5px solid var(--blue)
+}
+
+.app-bar {
+  height: 50px;
+  background-color: var(--blue);
+  color: #fff;
+  padding: 15px 10px;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.app-bar p {
+  cursor: pointer;
+}
+
+.flex {
+  display: flex;
+}
+
+.flex.ci {
+  align-items: center;
+}
+
+.flex.jcsb {
+  justify-content: space-between;
+}
+
+
+.todo-list-item {
+  background: rgb(215, 212, 230);
+  margin: 0 10px;
+  padding: 10px;
+  box-shadow: var(--shadow);
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+.todo-list-item input {
+  margin-right: 12px;
+  width: 20px;
+  height: 30px;
+  color: #555;
+}
+
+.todo-list-item .title {
+  font-size: 16px;
+  margin-bottom: 3px;
+  font-weight: 1000;
+}
+
+
+.todo-list-item footer {
+  display: flex;
+  justify-content: space-between;
+}
+
+.todo-list-item .created {
+  font-size: 10px;
+  color: rgb(43, 42, 42);
+}
+.todo-list-item .content {
+  flex: 1;
+}
+.todo-head {
+  font-size: 15px;
+  font-weight: 900;
+  margin-left: 10px;
+}
+
+.text-red {
+  color: red;
+  margin: 10px;
+  font-size: 13px;
+}
+.todo-add-btn {
+  text-align: right;
+  margin-right: 10px;
+}
+.todo-add-btn button {
+  background: var(--blue);
+  color: #fff;
+  padding: 7px 15px;
+  cursor: pointer;
+  border: 0;
+  border-radius: 8px;
+}
+.todo-add-btn.center {
+  text-align: center;
+}
+.add-todo {
+  padding: 10px;
+}
+
+.add-todo h1 {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.add-todo input {
+  box-shadow: var(--shadow);
+  border: 0;
+  padding: 7px 10px;
+  margin-top: 10px;
+  width: 100%;
+}
+
+.add-todo textarea {
+  box-shadow: var(--shadow);
+  border: 0;
+  padding: 7px 10px;
+  margin-top: 10px;
+  height: 70px;
+  width: 100%;
+}
+
+.btn-del {
+  color: red;
+  border: 0;
+  border-radius: 100px;
+  width: 25px;
+  height: 25px;
+  font-size: 18px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.todo-desc {
+  padding: 10px;
+  font-size: 15px;
+  color: #555;
+}
+
+.icon-btn {
+  cursor: pointer;
+}
+
+.info-page {
+  padding: 15px;
+}
+
+.info-page .title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+
+.user-info img {
+  border-radius: 6px;
+  height: 50px;
+  margin-right: 10px;
+}
+
+.user-info .name {
+  font-size: 14px;
+  font-weight: 700;
+}
+
+.user-info .email {
+  font-size: 13px;
+  color: #555;
+}
