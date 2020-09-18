@@ -1,0 +1,18 @@
+{
+  "todos": [
+    {
+      "id": 1,
+      "title": "Wash Hands",
+      "discription": "Wash hands, be safe from CORONAAAAA",
+      "created": "Sun Sep 10 2020",
+      "completed": true
+    },
+    {
+      "id": 2,
+      "title": "Sanitize Hands",
+      "discription": "Sanitize hands, be safe from CORONAAAAA",
+      "created": "Sun Sep 15 2020",
+      "completed": false
+    }
+  ]
+}

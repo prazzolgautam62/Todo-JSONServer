@@ -1,79 +1,112 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useHistory, withRouter } from "react-router-dom";
+import axios from 'axios';
+import AddTodo from './AddTodo';
+const server = 'http://localhost:5000';
 
-//Combination of Individual Todo items
+function TodoListScreen(props) {
+  const [todoList, setTodoList] = useState([]);
 
-class TodoListScreen extends Component {
-  render() {
-    return (
-      <div>
-        <div className="todo-add-btn">
-          <button
-            className="btn"
-            onClick={() => this.props.history.push("add_todo")}
-          >
+  useEffect(() => {
+    getTodos();
 
-            Add Todo
-          </button>
-        </div>
-        <br />
-        {this.props.state.todos.map((item) => {
-          return (
-            <TodoItem
-              key={item.id}
-              handelDelete={this.props.handelDel}
-              toggleComplete={this.props.toggleComplete}
-              history={this.props.history}
-              {...item}
+  }, [])
+
+  const getTodos = async () => {
+    let res = await axios.get(`${server}/todos`);
+    setTodoList(res.data);
+  }
+
+  //Checkbox
+
+  const toggleComplete = async (id, completed) => {
+    let res = await axios.patch(`${server}/todos/${id}`, { completed: !completed });
+    const updatedList = todoList.map(todo => {
+      if (todo.id === res.data.id) {
+        return res.data;
+      }
+
+      return todo;
+    });
+
+    setTodoList(updatedList);
+  }
+
+  //Delete operation
+  const handleDelete = async (id) => {
+    await axios.delete(`${server}/todos/${id}`);
+    const newList = todoList.filter((item) => {
+      return item.id !== id;
+    })
+
+    setTodoList(newList);
+  }
+
+  //Open/handles Individual Todo
+
+  const handleClick = (id) => {
+    props.history.push("/todo/" + id);
+  }
+
+  return (
+    <div>
+      <div className="todo-add-btn">
+        <a href="/add_todo"><button
+          className="btn"
+          onClick={() => <AddTodo />}
+        >
+
+          Add Todo
+          </button></a>
+      </div>
+      <br />
+
+      {todoList.map((todo, key) => (
+        <div className="todo-list-item" key={key}
+        >
+
+          <div className="flex jcsb ci" >
+            <input
+              type="checkbox"
+              checked={todo.completed}
+              onChange={() => toggleComplete(todo.id, todo.completed)}
+
             />
-          );
-        })}
-      </div>
-    );
-  }
-}
+            <div className="content" onClick=
+              {() => handleClick(todo.id)}
 
-//Individual Todo.
 
-class TodoItem extends React.Component {
-
-  handleClick = () => {
-    this.props.history.push("/todo/" + this.props.id);
-  };
-
-  render() {
-    return (
-      <div className="todo-list-item">
-        <div className="flex jcsb ci">
-          <input
-            type="checkbox"
-            checked={this.props.completed}
-            onChange={() => this.props.toggleComplete(this.props.id)}
-          />
-          <div className="content" onClick={this.handleClick}>
-            {/* Title field */}
-            <div
-              className="title"
-              style={{
-                textDecoration: this.props.completed ? "line-through" : "none",
-              }}
             >
-              {this.props.title}
-            </div>
-
-            {/* Date Field */}
-
-            <div className="created">Created: {this.props.created}</div>
-          </div>
-          <div
-            className="btn-del"
-            onClick={() => this.props.handelDelete(this.props.id)}
-          >
-            x
+              {/* Title field */}
+              <div
+                className="title"
+                style={{
+                  textDecoration: todo.completed ? "line-through" : "none",
+                }}
+              >
+                {todo.title}
               </div>
+
+              {/* Date Field */}
+
+              <div className="created">Created:{todo.created}</div>
+            </div>
+            <div
+              className="btn-del"
+              onClick={() => handleDelete(todo.id)}
+            >
+              x
+              </div>
+          </div>
+
+
         </div>
-      </div>
-    );
-  }
+      ))}
+
+    </div>
+  );
+
 }
 
-export default TodoListScreen;
+
+export default withRouter(TodoListScreen);

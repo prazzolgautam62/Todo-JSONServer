@@ -1,41 +1,45 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import './../assets/App.css';
+import { withRouter } from 'react-router-dom';
+const server = 'http://localhost:5000';
 
-class TodoDescription extends Component {
 
-  state = {
-    todo: null,
+function TodoDescription(props) {
+  const [newTodo, setNewTodo] = useState([]);
+
+
+  useEffect(() => {
+    getItemById();
+  }, [])
+
+
+  const getItemById = async () => {
+    const id = parseInt(+props.match.params.id);
+    const item = await axios.get(`${server}/todos/${id}`)
+    if (item) setNewTodo(item.data);
   }
 
-  getItemFromId = () => {
-    const id = parseInt(this.props.match.params.id);
-    const item = this.props.state.todos.filter(item => item.id === id)[0];
-    if (item) this.setState({ ...this.state, todo: item });
-  };
+  return (
+    <div>
+      {newTodo && (
+        <React.Fragment>
+          <p className="todo-head">{newTodo.title}</p>
+          <p className="todo-desc">
+            {newTodo.discription}
+          </p>
+        </React.Fragment>
+      )}
 
-  componentDidMount() {
-    this.getItemFromId();
-  }
-
-  render() {
-    return (
-      <div>
-        {this.state.todo && (
-          <React.Fragment>
-            <p className="todo-head">{this.state.todo.title}</p>
-            <p className="todo-desc">{this.state.todo.description}</p>
-          </React.Fragment>
-        )}
-
-        {(!this.state.todo || !this.state.todo.description) && (
-          <p className="text-red">No description found</p>
-        )}
+      {(!newTodo || !newTodo.discription) && (
+        <p className="text-red">No description found</p>
+      )}
 
 
 
-      </div>
-    );
-  }
+    </div>
+  );
+
 }
 
-export default TodoDescription;
+export default withRouter(TodoDescription);
